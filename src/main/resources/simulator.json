@@ -29,7 +29,7 @@
   "sinkInfo": {
     "channel": "File",
     "options": {
-      "Multiple": 1,
+      "Multiple": 0,
       "OutPath": "test"
     }
   }
