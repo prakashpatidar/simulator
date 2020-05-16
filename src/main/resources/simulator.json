@@ -7,21 +7,72 @@
   "dataInfo": {
     "properties": [
       {
-        "name": "id",
-        "dtype": "String",
-        "algoType": "GUID",
+        "name": "fromNumber",
+        "dtype": "Long",
+        "algoType": "rlong",
         "options": {
-          "min": 1000000,
-          "max": 100000000
+          "min": 7000000000,
+          "max": 9999999999
         }
       },
       {
-        "name": "timestamp",
+        "name": "toNumber",
         "dtype": "Long",
-        "algoType": "RLONG",
+        "algoType": "rlong",
         "options": {
-          "min": 1000000,
-          "max": 2000000
+          "min": 7000000000,
+          "max": 9999999999
+        }
+      },
+      {
+        "name": "callTime",
+        "dtype": "Long",
+        "algoType": "rlong",
+        "options": {
+          "min": 1400000000000,
+          "max": 1589631231000
+        }
+      },
+      {
+        "name": "callDuration",
+        "dtype": "Long",
+        "algoType": "rlong",
+        "options": {
+          "min": 0,
+          "max": 1000000
+        }
+      },
+      {
+        "name": "fromIMEI",
+        "dtype": "Long",
+        "algoType": "rlong",
+        "options": {
+          "min": 900000062471854,
+          "max": 999900862471854
+        }
+      },
+      {
+        "name": "toIMEI",
+        "dtype": "Long",
+        "algoType": "rlong",
+        "options": {
+          "min": 900000062471854,
+          "max": 999900862471854
+        }
+      }
+    ,
+      {
+        "name": "fromLoc",
+        "dtype": "Double",
+        "algoType": "rGeo",
+        "options": {
+        }
+      },
+      {
+        "name": "toLoc",
+        "dtype": "Double",
+        "algoType": "rGeo",
+        "options": {
         }
       }
     ]

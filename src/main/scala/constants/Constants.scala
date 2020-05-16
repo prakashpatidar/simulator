@@ -32,6 +32,7 @@ object Constants {
     val Set:Value=Value("SET")
     val RDate:Value=Value("RDATE")
     val RDateTime:Value=Value("RDATETIME")
+    val RGeo:Value=Value("RGEO")
   }
   object Channel extends Enumeration
   {
