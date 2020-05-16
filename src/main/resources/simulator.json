@@ -1,0 +1,36 @@
+{
+  "loadInfo": {
+    "batchSize": 10000,
+    "batchCount": 10,
+    "timeThresold": 1000
+  },
+  "dataInfo": {
+    "properties": [
+      {
+        "name": "id",
+        "dtype": "String",
+        "algoType": "GUID",
+        "options": {
+          "min": 1000000,
+          "max": 100000000
+        }
+      },
+      {
+        "name": "timestamp",
+        "dtype": "Long",
+        "algoType": "RLONG",
+        "options": {
+          "min": 1000000,
+          "max": 2000000
+        }
+      }
+    ]
+  },
+  "sinkInfo": {
+    "channel": "File",
+    "options": {
+      "Multiple": 1,
+      "OutPath": "test"
+    }
+  }
+}
