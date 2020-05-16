@@ -1,14 +1,14 @@
 {
   "loadInfo": {
-    "batchSize": 10000,
-    "batchCount": 10,
+    "batchSize": 1000000,
+    "batchCount": 5,
     "timeThresold": 1000
   },
   "dataInfo": {
     "properties": [
       {
-        "name": "fromNumber",
-        "dtype": "Long",
+        "name": "from_number",
+        "dType": "Long",
         "algoType": "rlong",
         "options": {
           "min": 7000000000,
@@ -16,8 +16,8 @@
         }
       },
       {
-        "name": "toNumber",
-        "dtype": "Long",
+        "name": "to_number",
+        "dType": "Long",
         "algoType": "rlong",
         "options": {
           "min": 7000000000,
@@ -25,8 +25,8 @@
         }
       },
       {
-        "name": "callTime",
-        "dtype": "Long",
+        "name": "call_time",
+        "dType": "Long",
         "algoType": "rlong",
         "options": {
           "min": 1400000000000,
@@ -34,8 +34,8 @@
         }
       },
       {
-        "name": "callDuration",
-        "dtype": "Long",
+        "name": "call_duration",
+        "dType": "Long",
         "algoType": "rlong",
         "options": {
           "min": 0,
@@ -43,8 +43,8 @@
         }
       },
       {
-        "name": "fromIMEI",
-        "dtype": "Long",
+        "name": "from_imei",
+        "dType": "Long",
         "algoType": "rlong",
         "options": {
           "min": 900000062471854,
@@ -52,25 +52,24 @@
         }
       },
       {
-        "name": "toIMEI",
-        "dtype": "Long",
+        "name": "to_imei",
+        "dType": "Long",
         "algoType": "rlong",
         "options": {
           "min": 900000062471854,
           "max": 999900862471854
         }
-      }
-    ,
+      },
       {
-        "name": "fromLoc",
-        "dtype": "Double",
+        "name": "from_loc",
+        "dType": "String",
         "algoType": "rGeo",
         "options": {
         }
       },
       {
-        "name": "toLoc",
-        "dtype": "Double",
+        "name": "to_loc",
+        "dType": "String",
         "algoType": "rGeo",
         "options": {
         }
@@ -78,10 +77,14 @@
     ]
   },
   "sinkInfo": {
-    "channel": "File",
+    "channel": "Spark",
     "options": {
       "Multiple": 0,
-      "OutPath": "test"
+      "Keyspace": "cdr",
+      "table": "calls",
+      "spark.cassandra.connection.host": "localhost",
+      "spark.cassandra.connection.port": "9042",
+      "confirm.truncate": "true"
     }
   }
 }

@@ -4,9 +4,10 @@ object Constants {
   object DType extends Enumeration
   {
     type DType =Value
-    val IntType:Value= Value("Int")
-    val LongType:Value= Value("Long")
-    val StringType:Value= Value("String")
+    val IntType:Value= Value("INT")
+    val LongType:Value= Value("LONG")
+    val StringType:Value= Value("STRING")
+    val DoubleType:Value= Value("DOUBLE")
   }
   object SinkConfig
   {
@@ -14,6 +15,10 @@ object Constants {
     val ValSep:String = "ValSep"
     val OutPath:String="OutPath"
     val Multiple:String="Multiple"
+    val Format:String="Format"
+    val Keyspace:String="Keyspace"
+    val Table:String="Table"
+
   }
   object Options
   {
@@ -38,5 +43,6 @@ object Constants {
   {
     type Channel = Value
     val FileSink:Value= Value("File")
+    val SparkSink:Value= Value("Spark")
   }
 }

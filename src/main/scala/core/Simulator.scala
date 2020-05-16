@@ -57,18 +57,18 @@ class Simulator(simulatorConfig: SimulatorConfig) {
       case Algo.Set =>
         val sets = Seq(propertyConfig.options.getOrDefault(Constants.Options.Sets, ""))
         sets(Random.nextInt(sets.size))
-      case Algo.RGeo =>getLat+","+getLong
+      case Algo.RGeo =>getLat+"," + getLong
     }
     vector :+ value.toString
   }
 
   private def getLat: Double = {
     val u = Random.nextDouble()
-    Math.toDegrees(Math.acos(u * 2 - 1)) - 90
+    ((Math.toDegrees(Math.acos(u * 2 - 1)) - 90)*100000).round/100000.toDouble
   }
    def getLong: Double = {
     val v = Random.nextDouble()
-    360 * v - 180
+     ((360 * v - 180)*100000).round/100000.toDouble
   }
 }
 

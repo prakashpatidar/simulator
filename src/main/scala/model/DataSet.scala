@@ -1,6 +1,23 @@
 package model
 
+import constants.Constants
+import constants.Constants.DType
+import org.apache.spark.sql.types.{DataType, DoubleType, IntegerType, LongType, StringType, StructField, StructType}
+
 case class DataSet(records:Array[Array[Any]])
 case class Schema(recordDef: Array[PropertyDef])
-case class PropertyDef(name:String,dType:String,index:Short)
+{
+  def getColumns:Array[String]=recordDef.map(_.name)
+
+  def getType(dType: String): DataType = Constants.DType.withName(dType.toUpperCase()) match {
+      case DType.StringType=>StringType
+      case DType.IntType=>IntegerType
+      case DType.LongType=>StringType
+      case DType.DoubleType=>DoubleType
+    }
+
+  def getSchema:StructType=StructType(recordDef.map(x=>StructField(x.name,getType(x.dType),x.nullable)))
+
+}
+case class PropertyDef(name:String,dType:String,index:Short,nullable:Boolean=true)
 
