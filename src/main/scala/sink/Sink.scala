@@ -27,20 +27,21 @@ object Sink {
 }
 
 class FileSink(sinkConfig: SinkConfig) extends Sink(sinkConfig) {
-  val path:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.OutPath, "test")+File.separator
-  val recordSeparator:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.RecordSep, "\n")
-  val valSeparator:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.ValSep, "\t")
-  val multiple:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.Multiple, "0")
+  val path: String = sinkConfig.options.getOrDefault(Constants.SinkConfig.OutPath, "test") + File.separator
+  val recordSeparator: String = sinkConfig.options.getOrDefault(Constants.SinkConfig.RecordSep, "\n")
+  val valSeparator: String = sinkConfig.options.getOrDefault(Constants.SinkConfig.ValSep, "\t")
+  val multiple: String = sinkConfig.options.getOrDefault(Constants.SinkConfig.Multiple, "0")
 
   import java.nio.file.Files
   import java.nio.file.Paths
+
   Files.createDirectories(Paths.get(path))
-  var bw = new BufferedWriter(new FileWriter(new File(path+System.currentTimeMillis())))
+  var bw = new BufferedWriter(new FileWriter(new File(path + System.currentTimeMillis())))
 
   override def sink(records: Seq[Vector[String]], schema: Schema): Unit = {
     if (multiple == "1") {
       bw.close()
-      println(path+System.currentTimeMillis())
+      println(path + System.currentTimeMillis())
       bw = new BufferedWriter(new FileWriter(new File(path + System.currentTimeMillis())))
     }
     records.foreach(record => bw.write(record.mkString(valSeparator) + recordSeparator))
@@ -48,24 +49,31 @@ class FileSink(sinkConfig: SinkConfig) extends Sink(sinkConfig) {
   }
 }
 
-class SparkSink(sinkConfig: SinkConfig) extends Sink(sinkConfig)
-{
+class SparkSink(sinkConfig: SinkConfig) extends Sink(sinkConfig) {
   Logger.getLogger("org").setLevel(Level.WARN)
   Logger.getLogger("akka").setLevel(Level.WARN)
-  val spark =SparkSession.builder().appName("Simulator").master("local").getOrCreate();
-
-  val format=sinkConfig.options.getOrDefault(Constants.SinkConfig.Format,"org.apache.spark.sql.cassandra")
+  val spark = SparkSession.builder().appName("Simulator").master("local").getOrCreate();
+  val path: String = sinkConfig.options.get(Constants.SinkConfig.OutPath)
+  val format = sinkConfig.options.getOrDefault(Constants.SinkConfig.Format, "org.apache.spark.sql.cassandra")
+  val partition: String = sinkConfig.options.get(Constants.SinkConfig.Partition)
+  val partitionBy: String = sinkConfig.options.get(Constants.SinkConfig.PartitionBy)
   override def sink(records: Seq[Vector[String]], schema: Schema): Unit = {
     import spark.implicits._
-    val rdd:RDD[Row]=spark.sparkContext.parallelize(records.map(record=>Row(record:_*)))
-    val df=spark.createDataFrame(rdd,schema.getSchema)
-
+    val rdd: RDD[Row] = spark.sparkContext.parallelize(records.map(record => Row(record: _*)))
+    val df = spark.createDataFrame(rdd, schema.getSchema)
+    if(partition!=null)
+      df.coalesce(partition.toInt)
     df.printSchema()
-    df.show(10)
-    df.write
+    //df.show(10)
+    val writer = df.write
       .format(format)
       .mode(SaveMode.Append)
       .options(sinkConfig.options)
-      .save()
+    if(partitionBy!=null)
+      writer.partitionBy(partitionBy)
+    if (path != null)
+      writer.save(path)
+    else
+      writer.save()
   }
 }

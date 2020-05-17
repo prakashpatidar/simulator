@@ -1,7 +1,7 @@
 {
   "loadInfo": {
-    "batchSize": 10000,
-    "batchCount": 5,
+    "batchSize": 100000,
+    "batchCount": 1,
     "timeThreshold": 1000
   },
   "dataInfo": {
@@ -29,7 +29,7 @@
         "dType": "Date",
         "algoType": "rDate",
         "options": {
-          "min": "17000",
+          "min": "18299",
           "max": "18300",
           "dateFormat": "yyyy-MM-dd"
         }
@@ -89,6 +89,10 @@
   "sinkInfo": {
     "channel": "Spark",
     "options": {
+      "Format": "parquet",
+      "OutPath": "hdfs://localhost:9000/data/simulator4",
+      "Partition": 1,
+      "PartitionBy":"call_date",
       "Multiple": 0,
       "Keyspace": "cdr",
       "table": "calls",

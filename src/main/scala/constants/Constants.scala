@@ -19,7 +19,8 @@ object Constants {
     val Format:String="Format"
     val Keyspace:String="Keyspace"
     val Table:String="Table"
-
+    val Partition:String="Partition"
+    val PartitionBy:String="PartitionBy"
   }
   object Options
   {
