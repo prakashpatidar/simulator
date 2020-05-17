@@ -27,7 +27,7 @@ object Sink {
 }
 
 class FileSink(sinkConfig: SinkConfig) extends Sink(sinkConfig) {
-  val path:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.OutPath, "simulator.txt")+File.separator
+  val path:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.OutPath, "test")+File.separator
   val recordSeparator:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.RecordSep, "\n")
   val valSeparator:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.ValSep, "\t")
   val multiple:String = sinkConfig.options.getOrDefault(Constants.SinkConfig.Multiple, "0")
@@ -61,7 +61,7 @@ class SparkSink(sinkConfig: SinkConfig) extends Sink(sinkConfig)
     val df=spark.createDataFrame(rdd,schema.getSchema)
 
     df.printSchema()
-    //df.show(10)
+    df.show(10)
     df.write
       .format(format)
       .mode(SaveMode.Append)

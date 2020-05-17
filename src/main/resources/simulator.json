@@ -1,8 +1,8 @@
 {
   "loadInfo": {
-    "batchSize": 1000000,
+    "batchSize": 10000,
     "batchCount": 5,
-    "timeThresold": 1000
+    "timeThreshold": 1000
   },
   "dataInfo": {
     "properties": [
@@ -22,6 +22,16 @@
         "options": {
           "min": 7000000000,
           "max": 9999999999
+        }
+      },
+      {
+        "name": "call_date",
+        "dType": "Date",
+        "algoType": "rDate",
+        "options": {
+          "min": "17000",
+          "max": "18300",
+          "dateFormat": "yyyy-MM-dd"
         }
       },
       {

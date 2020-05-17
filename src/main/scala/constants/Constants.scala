@@ -8,6 +8,7 @@ object Constants {
     val LongType:Value= Value("LONG")
     val StringType:Value= Value("STRING")
     val DoubleType:Value= Value("DOUBLE")
+    val DateType:Value= Value("DATE")
   }
   object SinkConfig
   {
@@ -25,6 +26,7 @@ object Constants {
     val Min:String="min"
     val Max:String="max"
     val Sets:String="sets"
+    val DateFormat:String="dateFormat"
   }
   object Algo extends Enumeration
   {

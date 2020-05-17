@@ -1,18 +1,22 @@
 package core
 
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 import config.{ConfigReader, DataConfig, PropertyConfig, SimulatorConfig}
 import constants.Constants
 import constants.Constants.{Algo, Options}
 import model.{PropertyDef, Schema}
 import org.apache.logging.log4j.LogManager
+import org.joda.time.Days
+import org.joda.time.format.DateTimeFormat
 import sink.Sink
 
 import scala.util.Random
 
 class Simulator(simulatorConfig: SimulatorConfig) {
   private val logger = LogManager.getLogger(this.getClass)
+
 
   def getSchema(dataInfo: DataConfig): Schema = {
     Schema(dataInfo.properties.map(property => PropertyDef(property.name, property.dType, property.index)))
@@ -53,22 +57,28 @@ class Simulator(simulatorConfig: SimulatorConfig) {
       case Algo.RInt => random
       case Algo.Rlong => random.toLong
       case Algo.RStr => Random.alphanumeric.take(random.toInt).mkString
-      case Algo.RDate => LocalDate.ofEpochDay(random.toInt)
+      case Algo.RDate =>getDateStr(LocalDate.ofEpochDay(random.toInt),propertyConfig.options.getOrDefault(Constants.Options.DateFormat,"yyyy-mm-dd"))
       case Algo.Set =>
         val sets = Seq(propertyConfig.options.getOrDefault(Constants.Options.Sets, ""))
         sets(Random.nextInt(sets.size))
-      case Algo.RGeo =>getLat+"," + getLong
+      case Algo.RGeo => getLat + "," + getLong
     }
     vector :+ value.toString
   }
-
-  private def getLat: Double = {
-    val u = Random.nextDouble()
-    ((Math.toDegrees(Math.acos(u * 2 - 1)) - 90)*100000).round/100000.toDouble
+  def getDate(dateStr:String,format:String):LocalDate= {
+    LocalDate.parse(dateStr,DateTimeFormatter.ofPattern(format))
   }
-   def getLong: Double = {
+  def getDateStr(date:LocalDate,format:String):String={
+    DateTimeFormatter.ofPattern(format).format(date)
+  }
+  def getLat: Double = {
+    val u = Random.nextDouble()
+    ((Math.toDegrees(Math.acos(u * 2 - 1)) - 90) * 100000).round / 100000.toDouble
+  }
+
+  def getLong: Double = {
     val v = Random.nextDouble()
-     ((360 * v - 180)*100000).round/100000.toDouble
+    ((360 * v - 180) * 100000).round / 100000.toDouble
   }
 }
 
