@@ -87,25 +87,13 @@
     ]
   },
   "sinkInfo": {
-    "channel": "kafka",
+    "channel": "file",
     "options": {
       "comments": "//parquet(OutPath: hdfs://localhost:9000/data/simulator4),json,kafka",
-      "Format": "kafka",
-      "kafka.bootstrap.servers": "localhost:9092",
-      "kafka.key": "from_number",
-      "kafka.value": "*",
-      "kafka.format": "json",
-      "topic": "cdr",
-      "RecordSep": "\n",
-      "ValSep": "\t",
-      "Partition": 1,
-      "PartitionBy":"call_date",
       "Multiple": 0,
-      "Keyspace": "cdr",
-      "table": "calls",
-      "spark.cassandra.connection.host": "localhost",
-      "spark.cassandra.connection.port": "9042",
-      "confirm.truncate": "true"
+      "OutPath": "simulator",
+      "RecordSep": "\n",
+      "ValSep": "\t"
     }
   }
 }

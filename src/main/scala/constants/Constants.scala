@@ -21,6 +21,9 @@ object Constants {
     val Table:String="Table"
     val Partition:String="Partition"
     val PartitionBy:String="PartitionBy"
+    val KafkaKey:String="kafka.key"
+    val KafkaValue:String="kafka.value"
+    val KafkaFormat:String="kafka.format"
   }
   object Options
   {
@@ -45,7 +48,9 @@ object Constants {
   object Channel extends Enumeration
   {
     type Channel = Value
-    val FileSink:Value= Value("File")
-    val SparkSink:Value= Value("Spark")
+    val FileSink:Value= Value("FILE")
+    val DfsSink:Value= Value("DFS")
+    val KafkaSink:Value= Value("KAFKA")
+    val CassandraSink:Value= Value("CASSANDRA")
   }
 }

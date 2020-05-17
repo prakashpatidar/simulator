@@ -11,6 +11,8 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % "test"
 libraryDependencies += "com.google.code.gson" % "gson" % "2.8.6"
 libraryDependencies += "org.apache.spark" %% "spark-core" % "3.0.0-preview2"
 libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.0.0-preview2"
+libraryDependencies += "org.apache.spark" %% "spark-streaming" % "3.0.0-preview2"
+libraryDependencies += "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.0.0-preview2"
 libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "3.0.0-alpha2"
 
 

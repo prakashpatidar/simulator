@@ -8,7 +8,10 @@ case class DataSet(records:Array[Array[Any]])
 case class Schema(recordDef: Array[PropertyDef])
 {
   def getColumns:Array[String]=recordDef.map(_.name)
-
+  def getColumnIndex(column:String):Short=
+    {
+      recordDef.find(_.name.equals(column)).get.index
+    }
   def getType(dType: String): DataType = Constants.DType.withName(dType.toUpperCase()) match {
       case DType.StringType=>StringType
       case DType.IntType=>IntegerType
